@@ -77,15 +77,24 @@ My final model consisted of the following layers:
 | L4.RELU					|												|
 | L4.Dropout	      	| keep_prob 0.6 				|
 | L5.Fully connected		| input 84xW, output 43   |
-| Softmax				| AdamOptimizer        									|
-* W is a variable for to wide the number of neurons.
+| Softmax				| with AdamOptimizer       |
+
+* W is a variable to wide the number of neurons. The final model used "2", which shows better accuracy than "1".
+* Dropout is applied on fully connected layer of L3 and L4 only. When applied L1 and L2, the accuracy decreased in my case. 
+* Keep_prob for dropout rate used 0.6, which showed better accuracy than any other values "0.7, 0.8, 0.9, 1.0"  
 
 
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+#### Model Training
 
-To train the model, I used an ....
+To train the model, I used the adamoptimizer and following hyperparameters:
+- learning rate : 0.001
+- dropout_prob : 0.6
+- number of epochs : 30
+- batch size : 128
+- initialization sigma : 0.05
+- neuron size : 2 (twice number of neurons in LENET5)
 
-####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+#### Solution Approach
 
 My final model results were:
 * training set accuracy of ?
@@ -107,16 +116,17 @@ If a well known architecture was chosen:
 
 ###Test a Model on New Images
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+#### Acquiring New Images
 
 Here are five German traffic signs that I found on the web:
 
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
 
-The first image might be difficult to classify because ...
+The forth image might be difficult to classify because the speed number is not clear. 
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### Performance on New Images
+2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
