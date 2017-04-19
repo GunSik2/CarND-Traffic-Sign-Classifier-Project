@@ -33,7 +33,7 @@ The goals / steps of this project are the following:
 I used the numpy library to calculate summary statistics of the traffic signs data set:
 
 * The size of training set is ? 34,799
-* The size of the validation set is ? 
+* The size of the validation set is ? 4410
 * The size of test set is ? 12,630
 * The shape of a traffic sign image is ? (32, 32, 3)
 * The number of unique classes/labels in the data set is ? 43
@@ -49,6 +49,9 @@ The histogram of the trainig data set shows the distributions of each classes.
 #### Preprocessing
 
 At first, I only applied the essential data preprocessing, normalization. I applied a quick way to approximately normalize the image data by using (pixel - 128.)/128, instead of using mean zero and equal variance. 
+
+Here, you may need to cautious on the value "128." not "128". When changed the value128 to 128., the normalized image values different:  [28 25 24] is normalized to "[ 1.21875 1.1953125 1.1875 ]" with "128" and [-0.78125 -0.8046875 -0.8125 ] with "128." The accuracy also different: 0.846 with "128" and 0.956 with "128."  
+The normalized value with "128" is the same value calculated with numpy "(2 + (img-128)/128)". You can see the result on the [link](https://github.com/GunSik2/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier_problem.ipynb): With "128", normalized result, In [7] and accuracy ln [10]. With "128.", normalized result, In [17] and accuracy ln [24].
 
 Here is an example of a traffic sign image before and after normalization.
 
@@ -100,8 +103,8 @@ To train the model, I used the adamoptimizer and following hyperparameters:
 
 My final model results were:
 * training set accuracy of ? 0.999
-* validation set accuracy of ? 0.962
-* test set accuracy of ? 0.958
+* validation set accuracy of ? 0.957
+* test set accuracy of ? 0.950
 
 If a well known architecture was chosen:
 * What architecture was chosen? LeNET5
@@ -124,13 +127,13 @@ Here are the results of the prediction:
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | 0.Speed limit (20km/h)      		| Speed limit (20km/h) 									| 
-| 1.Speed limit (30km/h)     			| Speed limit (30km/h) 										|
+| 1.Speed limit (30km/h)     			| End of speed limit (80km/h) 										|
 | 22.Bumpy road					| Bumpy road											|
 | 4.Speed limit (70km/h)	      		| Speed limit (70km/h)					 				|
 | 9.No passing			| 34.Turn left ahead      							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. 
+The model was able to correctly guess 3 of the 5 traffic signs, which gives an accuracy of 60%. 
 
 #### Model Certainty - Softmax Probabilities
 
@@ -138,50 +141,50 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .99         			| Stop sign   									| 
+| 1.55531943e-05     				| 1. 										|
+| 9.65610147e-10					| 32.											|
+| 1.37152659e-13	      			| 6.					 				|
+| 9.06421748e-14				    | 29.      							|
 
 - Second image
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .96         			| 6.   									| 
+| .0367     				| 1. 										|
+| .0003					| 5.											|
+| .29e-05	      			| 12.					 				|
+| .24e-06				    | 38.      							|
 
 - Third image
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .99         			| 22.   									| 
+| .4e-7     				| 20. 										|
+| .6e-8					| 15.											|
+| .6e-8	      			| 26.					 				|
+| .2e-8				    | 28.      							|
 
 - Fourth image
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .64         			| 4   									| 
+| .35     				| 25 										|
+| .9e-3					| 26											|
+| .3e-3	      			| 38					 				|
+| .1e-4				    | 39      							|
 
 - Fifth image
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .99         			| 34.  									| 
+| .38e-03     				| 33. 										|
+| .30e-09					| 17.											|
+| .30e-10	      			| 38.					 				|
+| .12e-10				    | 36.      							|
 
 
