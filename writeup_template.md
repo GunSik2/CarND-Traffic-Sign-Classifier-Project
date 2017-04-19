@@ -39,7 +39,7 @@ I used the numpy library to calculate summary statistics of the traffic signs da
 * The number of unique classes/labels in the data set is ? 43
 
 #### Exploratory Visulaization
-The histogram of the trainig data set shows the distributions of the data set number of unique classes. 
+The histogram of the trainig data set shows the distributions of each classes. 
 
 ![alt text][image1]
 
@@ -48,41 +48,37 @@ The histogram of the trainig data set shows the distributions of the data set nu
 
 #### Preprocessing
 
-As a first step, I decided to convert the images to grayscale because ...
+At first, I only applied the essential data preprocessing, normalization. I applied a quick way to approximately normalize the image data by using (pixel - 128.)/128, instead of using mean zero and equal variance. 
 
-Here is an example of a traffic sign image before and after grayscaling.
+Here is an example of a traffic sign image before and after normalization.
 
 ![alt text][image2]
 
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
 
 
-####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+#### Model Architecture
 
 My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
- 
+| L1.Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6xW 	|
+| L1.RELU					|												|
+| L1.Max pooling	      	| 2x2 stride,  outputs 14x14x6xW 				|
+| L2.Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x16xW 	|
+| L2.RELU					|												|
+| L2.Max pooling	      	| 2x2 stride,  outputs 5x5x16xW 				|
+| L2.Flatten	      	| input 5x5x16xW, output 400xW 				|
+| L3.Fully connected		| input 400xW, output 120xW   |
+| L3.RELU					|												|
+| L3.Dropout	      	| keep_prob 0.6 				|
+| L4.Fully connected		| input 120xW, output 84xW   |
+| L4.RELU					|												|
+| L4.Dropout	      	| keep_prob 0.6 				|
+| L5.Fully connected		| input 84xW, output 43   |
+| Softmax				| AdamOptimizer        									|
+* W is a variable for to wide the number of neurons.
 
 
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
