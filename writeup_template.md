@@ -99,9 +99,9 @@ To train the model, I used the adamoptimizer and following hyperparameters:
 #### Solution Approach
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ? 
+* training set accuracy of ? 0.999
+* validation set accuracy of ? 0.962
+* test set accuracy of ? 0.958
 
 If a well known architecture was chosen:
 * What architecture was chosen? LeNET5
@@ -133,7 +133,9 @@ Here are the results of the prediction:
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. 
 
 #### Model Certainty - Softmax Probabilities
+
 - First image
+
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | .60         			| Stop sign   									| 
@@ -143,6 +145,7 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 | .01				    | Slippery Road      							|
 
 - Second image
+
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | .60         			| Stop sign   									| 
@@ -152,6 +155,7 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 | .01				    | Slippery Road      							|
 
 - Third image
+
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | .60         			| Stop sign   									| 
@@ -161,6 +165,7 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 | .01				    | Slippery Road      							|
 
 - Fourth image
+
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | .60         			| Stop sign   									| 
@@ -170,6 +175,7 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 | .01				    | Slippery Road      							|
 
 - Fifth image
+
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | .60         			| Stop sign   									| 
