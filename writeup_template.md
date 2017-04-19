@@ -13,8 +13,8 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./examples/image1.png "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
+[image2]: ./examples/image2.png "Original Image"
+[image3]: ./examples/image3.png "Normalized Image"
 [image4]: ./examples/image4.png "Traffic Sign 1"
 [image5]: ./examples/image5.png "Traffic Sign 2"
 [image6]: ./examples/image6.png "Traffic Sign 3"
@@ -52,9 +52,11 @@ At first, I only applied the essential data preprocessing, normalization. I appl
 
 Here is an example of a traffic sign image before and after normalization.
 
+- Original image
 ![alt text][image2]
 
-
+- Normalized image
+![alt text][image3]
 
 #### Model Architecture
 
