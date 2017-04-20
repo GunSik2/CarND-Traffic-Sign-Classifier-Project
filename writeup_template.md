@@ -109,42 +109,42 @@ My final model consisted of the following layers:
 #### Model Training
 
 To train the model, I used the adamoptimizer and following hyperparameters:
-- learning rate : 0.001
-- dropout_prob : 0.6
-- number of epochs : 30
-- batch size : 128
-- initialization sigma : 0.05
-- neuron size : 2 (twice number of neurons in LENET5)
+  - learning rate : 0.001
+  - dropout_prob : 0.6
+  - number of epochs : 30
+  - batch size : 128
+  - initialization sigma : 0.05
+  - neuron size : 2 (twice number of neurons in LENET5)
 
 At first, I just tested the optimal parameters without appling image normalization:
-1. I started initialization values with condition no dropout, W=1:
-- sigma = 0.1, test accuracy = 0.859
-- sigma = 0.05, test accuracy = 0.926
+  1. I started initialization values with condition no dropout, W=1:
+    - sigma = 0.1, test accuracy = 0.859
+    - sigma = 0.05, test accuracy = 0.926
 
-2. Then I applied dropout_prob values with condition, W=1, sigma = 0.05:
-- keep_prob = 0.9 / accuracy train = 0.981, validation = 0.913, test = 0.906
-- keep_prob = 0.8 / accuracy train = 0.993, validation = 0.920, test = 0.910
-- keep_prob = 0.7 / accuracy train = 0.988, validation = 0.908, test = 0.910
+  2. Then I applied dropout_prob values with condition, W=1, sigma = 0.05:
+    - keep_prob = 0.9 / accuracy train = 0.981, validation = 0.913, test = 0.906
+    - keep_prob = 0.8 / accuracy train = 0.993, validation = 0.920, test = 0.910
+    - keep_prob = 0.7 / accuracy train = 0.988, validation = 0.908, test = 0.910
 
-3. Then I applied wider values with condition, W=1, sigma = 0.05, keep_prob = 0.8:
-- wider = 2  / accuracy train = 0.971, validation = 0.900, test = 0.889
-- wider = 3  / accuracy train = 0.989, validation = 0.921, test = 0.912
-- wider = 4  / accuracy train = 0.981, validation = 0.922, test = 0.900
-- wider = 5  / accuracy train = 0.971, validation = 0.901, test = 0.875
+  3. Then I applied wider values with condition, W=1, sigma = 0.05, keep_prob = 0.8:
+    - wider = 2  / accuracy train = 0.971, validation = 0.900, test = 0.889
+    - wider = 3  / accuracy train = 0.989, validation = 0.921, test = 0.912
+    - wider = 4  / accuracy train = 0.981, validation = 0.922, test = 0.900
+    - wider = 5  / accuracy train = 0.971, validation = 0.901, test = 0.875
 
 As the accuracy wasn't increased to acceptable boundary, I retested after appling image normalization:
-1. I applied learning_rate with condition, W=3, sigma=0.05, keep_prob=0.8
-- learning_rate = 0.001  / accuracy train = 0.997, validation = 0.945, test = 0.939
-- learning_rate = 0.002  / accuracy train = 0.996, validation = 0.946, test = 0.928
+  1. I applied learning_rate with condition, W=3, sigma=0.05, keep_prob=0.8
+    - learning_rate = 0.001  / accuracy train = 0.997, validation = 0.945, test = 0.939
+    - learning_rate = 0.002  / accuracy train = 0.996, validation = 0.946, test = 0.928
 
-2. I changed overall parameters intuitively: W=2, sigma=0.05, keep_prob=0.6
-- learning_rate = 0.001  / accuracy train = 1.000, validation = 0.957, test = 0.928
+  2. I changed overall parameters intuitively: W=2, sigma=0.05, keep_prob=0.6
+    - learning_rate = 0.001  / accuracy train = 1.000, validation = 0.957, test = 0.928
 
 Lesson's learned:
-- Need to normalize data first, before tunning parameters, because the paramters won't work in the changed data set. 
-- Need to tuning parameters systemically, because variaty of options exists and manual operations are limited. 
-  I'd like to consider [bayseian optimization]() to more efficitvely test.
-- Need to collect more matrix data to evaluate the performance to given model and hyperparameters (loss, weight visulaization) 
+  - Need to normalize data first, before tunning parameters, because the paramters won't work in the changed data set. 
+  - Need to tuning parameters systemically, because variaty of options exists and manual operations are limited. 
+    I'd like to consider [bayseian optimization]() to more efficitvely test.
+  - Need to collect more matrix data to evaluate the performance to given model and hyperparameters (loss, weight visulaization) 
 
 #### Solution Approach
 
@@ -158,7 +158,7 @@ If a well known architecture was chosen:
 * Why did you believe it would be relevant to the traffic sign application? LeNET5 was developed to distingish 10 digits from small size handwrite image(32x32x1) with one color channel, so the input and output data is similar to this problem.  
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well? The training and validation accuracy is similarly increated, and the final test accuracy was also acceptable.  
 
-###Test a Model on New Images
+### Test a Model on New Images
 
 #### Acquiring New Images
 
