@@ -146,7 +146,7 @@ As the accuracy wasn't increased to acceptable boundary, I retested after applin
 Lesson's learned:
   - Need to normalize data first, before tunning parameters, because the paramters won't work in the changed data set. 
   - Need to tuning parameters systemically, because variaty of options exists and manual operations are limited. 
-    I'd like to consider [bayseian optimization]() to more efficitvely test.
+    I'd like to consider [bayseian optimization](https://youtu.be/zhjrfBemz8w) to more efficitvely test.
   - Need to collect more matrix data to evaluate the performance to given model and hyperparameters (loss, weight visulaization) 
   - Need to add data by applying data augmetation to increase accuracy because of biased training data. 
 
