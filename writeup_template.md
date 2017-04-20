@@ -148,6 +148,7 @@ Lesson's learned:
   - Need to tuning parameters systemically, because variaty of options exists and manual operations are limited. 
     I'd like to consider [bayseian optimization]() to more efficitvely test.
   - Need to collect more matrix data to evaluate the performance to given model and hyperparameters (loss, weight visulaization) 
+  - Need to add data by applying data augmetation to increase accuracy because of biased training data. 
 
 #### Solution Approach
 
