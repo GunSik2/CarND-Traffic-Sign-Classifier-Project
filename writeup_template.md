@@ -52,6 +52,23 @@ At first, I only applied the essential data preprocessing, normalization. I appl
 
 Here, you may need to cautious on the value "128." not "128". When changed the value128 to 128., the normalized image values different:  [28 25 24] is normalized to "[ 1.21875 1.1953125 1.1875 ]" with "128" and [-0.78125 -0.8046875 -0.8125 ] with "128." The accuracy also different: 0.846 with "128" and 0.956 with "128."  
 The normalized value with "128" is the same value calculated with numpy "(2 + (img-128)/128)". You can see the result on the [link](https://github.com/GunSik2/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier_problem.ipynb): With "128", normalized result, In [7] and accuracy ln [10]. With "128.", normalized result, In [17] and accuracy ln [24].
+=> (By aki.saitoh) It was because of overflowing operation done by numpy. Unsigned int cannot handle negative values and automatically assign positive addition. Using 128. in the equation makes all values float, so there is no problem. For example, 
+```
+x = np.array([28, 25, 24])
+
+y0 = (x - 128) / 128
+print(y0)
+[-0.78125 -0.8046875 -0.8125 ]
+
+y1 = (np.uint8(x)-128)/128
+print(y1)
+[ 1.21875 1.1953125 1.1875 ]
+
+y4 = (np.int8(x)-128)/128
+print(y4)
+[-0.78125 -0.8046875 -0.8125 ]
+```
+
 
 Here is an example of a traffic sign image before and after normalization.
 
@@ -99,6 +116,36 @@ To train the model, I used the adamoptimizer and following hyperparameters:
 - initialization sigma : 0.05
 - neuron size : 2 (twice number of neurons in LENET5)
 
+At first, I just tested the optimal parameters without appling image normalization:
+1. I started initialization values with condition no dropout, W=1:
+- sigma = 0.1, test accuracy = 0.859
+- sigma = 0.05, test accuracy = 0.926
+
+2. Then I applied dropout_prob values with condition, W=1, sigma = 0.05:
+- keep_prob = 0.9 / accuracy train = 0.981, validation = 0.913, test = 0.906
+- keep_prob = 0.8 / accuracy train = 0.993, validation = 0.920, test = 0.910
+- keep_prob = 0.7 / accuracy train = 0.988, validation = 0.908, test = 0.910
+
+3. Then I applied wider values with condition, W=1, sigma = 0.05, keep_prob = 0.8:
+- wider = 2  / accuracy train = 0.971, validation = 0.900, test = 0.889
+- wider = 3  / accuracy train = 0.989, validation = 0.921, test = 0.912
+- wider = 4  / accuracy train = 0.981, validation = 0.922, test = 0.900
+- wider = 5  / accuracy train = 0.971, validation = 0.901, test = 0.875
+
+As the accuracy wasn't increased to acceptable boundary, I retested after appling image normalization:
+1. I applied learning_rate with condition, W=3, sigma=0.05, keep_prob=0.8
+- learning_rate = 0.001  / accuracy train = 0.997, validation = 0.945, test = 0.939
+- learning_rate = 0.002  / accuracy train = 0.996, validation = 0.946, test = 0.928
+
+2. I changed overall parameters intuitively: W=2, sigma=0.05, keep_prob=0.6
+- learning_rate = 0.001  / accuracy train = 1.000, validation = 0.957, test = 0.928
+
+Lesson's learned:
+- Need to normalize data first, before tunning parameters, because the paramters won't work in the changed data set. 
+- Need to tuning parameters systemically, because variaty of options exists and manual operations are limited. 
+  I'd like to consider [bayseian optimization]() to more efficitvely test.
+- Need to collect more matrix data to evaluate the performance to given model and hyperparameters (loss, weight visulaization) 
+
 #### Solution Approach
 
 My final model results were:
@@ -142,49 +189,49 @@ The model was able to correctly guess 3 of the 5 traffic signs, which gives an a
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | .99         			| Stop sign   									| 
-| 1.55531943e-05     				| 1. 										|
-| 9.65610147e-10					| 32.											|
-| 1.37152659e-13	      			| 6.					 				|
-| 9.06421748e-14				    | 29.      							|
+| 1.55531943e-05     				| 1. Speed limit (30km/h)										|
+| 9.65610147e-10					| 32.	End of all speed and passing limits										|
+| 1.37152659e-13	      			| 6.	End of speed limit (80km/h)				 				|
+| 9.06421748e-14				    | 29. Bicycles crossing     							|
 
 - Second image
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .96         			| 6.   									| 
-| .0367     				| 1. 										|
-| .0003					| 5.											|
-| .29e-05	      			| 12.					 				|
-| .24e-06				    | 38.      							|
+| .96         			| 6. End of speed limit (80km/h) 									| 
+| .0367     				| 1. Speed limit (20km/h)										|
+| .0003					| 5.	Speed limit (80km/h)										|
+| .29e-05	      			| 12.		Priority road			 				|
+| .24e-06				    | 38. Keep right     							|
 
 - Third image
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .99         			| 22.   									| 
-| .4e-7     				| 20. 										|
-| .6e-8					| 15.											|
-| .6e-8	      			| 26.					 				|
-| .2e-8				    | 28.      							|
+| .99         			| 22. Bumpy road  									| 
+| .4e-7     				| 20. 	Dangerous curve to the right										|
+| .6e-8					| 15.	No vehicles										|
+| .6e-8	      			| 26.	Traffic signals				 				|
+| .2e-8				    | 28. Children crossing     							|
 
 - Fourth image
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .64         			| 4   									| 
-| .35     				| 25 										|
-| .9e-3					| 26											|
-| .3e-3	      			| 38					 				|
-| .1e-4				    | 39      							|
+| .64         			| 4  Speed limit (70km/h) 									| 
+| .35     				| 25 	Road work									|
+| .9e-3					| 26	Traffic signals										|
+| .3e-3	      			| 38	Keep right				 				|
+| .1e-4				    | 39 	Keep left     							|
 
 - Fifth image
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .99         			| 34.  									| 
-| .38e-03     				| 33. 										|
-| .30e-09					| 17.											|
-| .30e-10	      			| 38.					 				|
-| .12e-10				    | 36.      							|
+| .99         			| 34. Turn left ahead 									| 
+| .38e-03     				| 33. Ahead only										|
+| .30e-09					| 17.		No entry										|
+| .30e-10	      			| 38.			Keep right			 				|
+| .12e-10				    | 36.	Go straight or right      							|
 
 
