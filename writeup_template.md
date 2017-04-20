@@ -51,8 +51,11 @@ The histogram of the trainig data set shows the distributions of each classes.
 At first, I only applied the essential data preprocessing, normalization. I applied a quick way to approximately normalize the image data by using (pixel - 128.)/128, instead of using mean zero and equal variance. 
 
 Here, you may need to cautious on the value "128." not "128". When changed the value128 to 128., the normalized image values different:  [28 25 24] is normalized to "[ 1.21875 1.1953125 1.1875 ]" with "128" and [-0.78125 -0.8046875 -0.8125 ] with "128." The accuracy also different: 0.846 with "128" and 0.956 with "128."  
+
 The normalized value with "128" is the same value calculated with numpy "(2 + (img-128)/128)". You can see the result on the [link](https://github.com/GunSik2/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier_problem.ipynb): With "128", normalized result, In [7] and accuracy ln [10]. With "128.", normalized result, In [17] and accuracy ln [24].
-=> (By aki.saitoh) It was because of overflowing operation done by numpy. Unsigned int cannot handle negative values and automatically assign positive addition. Using 128. in the equation makes all values float, so there is no problem. For example, 
+
+(By aki.saitoh) It was because of overflowing operation done by numpy. Unsigned int cannot handle negative values and automatically assign positive addition. Using 128. in the equation makes all values float, so there is no problem. For example, 
+
 ```
 x = np.array([28, 25, 24])
 
