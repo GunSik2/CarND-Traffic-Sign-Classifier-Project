@@ -72,6 +72,7 @@ print(y4)
 [-0.78125 -0.8046875 -0.8125 ]
 ```
 
+After then, I added gray scale conversion, before normalization. The gray scale showed slight improvement in validation accuracy from 0.936 to 0.946. In both cases, epoch was 6, which is best fit to avoid overfitting. 
 
 Here is an example of a traffic sign image before and after normalization.
 
@@ -143,12 +144,17 @@ As the accuracy wasn't increased to acceptable boundary, I retested after applin
   2. I changed overall parameters intuitively: W=2, sigma=0.05, keep_prob=0.6
     - learning_rate = 0.001  / accuracy train = 1.000, validation = 0.957, test = 0.928
 
+Final parameters 
+  1. I reduced epochs to avoid overfitting: epochs=6, W=2, sigma=0.05, keep_prob=0.6
+    - accuracy train = 0.99, validation = 0.946, test = 0.922
+    
 Lesson's learned:
   - Need to normalize data first, before tunning parameters, because the paramters won't work in the changed data set. 
   - Need to tuning parameters systemically, because variaty of options exists and manual operations are limited. 
     I'd like to consider [bayseian optimization](https://youtu.be/zhjrfBemz8w) to more efficitvely test.
   - Need to collect more matrix data to evaluate the performance to given model and hyperparameters (loss, weight visulaization) 
   - Need to add data by applying data augmetation to increase accuracy because of biased training data. 
+  - Need to create environment to automate changing parameters and finding best fit.  
 
 #### Solution Approach
 
