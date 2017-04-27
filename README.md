@@ -48,9 +48,9 @@ The histogram of the trainig data set shows the distributions of each classes.
 
 #### Preprocessing
 
-As a first step, I decided to convert the images to grayscale because Yann LeCun mentioned grayscale images improved accuracy in [his paper](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf), and grayscale images decreass the dimension by 3 folds. In my case, the gray scale improved validation accuracy from 0.936 to 0.946.
+As a first step, I decided to convert the images to grayscale because grayscale images can improve accuracy as mentioned in [Yann LeCun's paper](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf) and can decrease the image dimension by 3 folds. In my case, the gray scale improved validation accuracy from 0.936 to 0.946.
 
-As a last step, I simply normalized the image data because optimizer can find the best fit on well conditioned problem with zero mean and equal variance.
+As a last step, I simply normalized the image data using the following method, because optimizer can find the best fit better on well conditioned problem with zero mean and equal variance: (X - 128.) / 128. Here you need to cautious on the value "128." instead of "128". If expression, (X - 128) / 128,  is used, overflowing operation occurred by numpy because X is Unsigned int and cannot handle negative values.
 
 Here is an example of a traffic sign image before and after preprocessing.
 
