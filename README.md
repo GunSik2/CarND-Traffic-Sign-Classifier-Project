@@ -48,33 +48,11 @@ The histogram of the trainig data set shows the distributions of each classes.
 
 #### Preprocessing
 
-At first, I only applied the essential data preprocessing, normalization. I applied a quick way to approximately normalize the image data by using (pixel - 128.)/128, instead of using mean zero and equal variance. 
+As a first step, I decided to convert the images to grayscale because Yann LeCun mentioned grayscale images improved accuracy in [his paper](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf), and grayscale images decreass the dimension by 3 folds. In my case, the gray scale improved validation accuracy from 0.936 to 0.946.
 
-Here, you may need to cautious on the value "128." not "128". When changed the value128 to 128., the normalized image values different:  [28 25 24] is normalized to "[ 1.21875 1.1953125 1.1875 ]" with "128" and [-0.78125 -0.8046875 -0.8125 ] with "128." The accuracy also different: 0.846 with "128" and 0.956 with "128."  
+As a last step, I simply normalized the image data because optimizer can find the best fit on well conditioned problem with zero mean and equal variance.
 
-The normalized value with "128" is the same value calculated with numpy "(2 + (img-128)/128)". You can see the result on the [link](https://github.com/GunSik2/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier_problem.ipynb): With "128", normalized result, In [7] and accuracy ln [10]. With "128.", normalized result, In [17] and accuracy ln [24].
-
-(By aki.saitoh) It was because of overflowing operation done by numpy. Unsigned int cannot handle negative values and automatically assign positive addition. Using 128. in the equation makes all values float, so there is no problem. For example, 
-
-```
-x = np.array([28, 25, 24])
-
-y0 = (x - 128) / 128
-print(y0)
-[-0.78125 -0.8046875 -0.8125 ]
-
-y1 = (np.uint8(x)-128)/128
-print(y1)
-[ 1.21875 1.1953125 1.1875 ]
-
-y4 = (np.int8(x)-128)/128
-print(y4)
-[-0.78125 -0.8046875 -0.8125 ]
-```
-
-After then, I added gray scale conversion, before normalization. The gray scale showed slight improvement in validation accuracy from 0.936 to 0.946. In both cases, epoch was 6, which is best fit to avoid overfitting. 
-
-Here is an example of a traffic sign image before and after normalization.
+Here is an example of a traffic sign image before and after preprocessing.
 
 - Original image
 ![alt text][image2]
